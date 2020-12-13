@@ -169,7 +169,7 @@ func (c *Client) doRequestChrome(req *Request) (*Response, error) {
 	var body string
 	var res *network.Response
 
-	if req.RenderedWaitFor == nil {
+	if req.RenderedWaitFor == "" {
 		req.RenderedWaitFor = ":root"
 	}
 
