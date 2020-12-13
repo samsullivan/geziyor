@@ -210,6 +210,19 @@ func (g *Geziyor) GetRendered(url string, callback func(g *Geziyor, r *client.Re
 	g.Do(req, callback)
 }
 
+// GetRendered issues GET request using headless browser
+// and waits for a specific DOM element to be loaded.
+func (g *Geziyor) GetRenderedWaitFor(url string, sel string, callback func(g *Geziyor, r *client.Response)) {
+	req, err := client.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Printf("Request creating error %v\n", err)
+		return
+	}
+	req.Rendered = true
+	req.RenderedWaitFor = sel
+	g.Do(req, callback)
+}
+
 // Head issues a HEAD to the specified URL
 func (g *Geziyor) Head(url string, callback func(g *Geziyor, r *client.Response)) {
 	req, err := client.NewRequest("HEAD", url, nil)

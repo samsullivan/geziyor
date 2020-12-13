@@ -169,6 +169,10 @@ func (c *Client) doRequestChrome(req *Request) (*Response, error) {
 	var body string
 	var res *network.Response
 
+	if req.RenderedWaitFor == nil {
+		req.RenderedWaitFor = ":root"
+	}
+
 	// Set remote allocator or use local chrome instance
 	ctx := context.Background()
 	if c.opt.RemoteAllocatorURL != "" {
@@ -202,7 +206,7 @@ func (c *Client) doRequestChrome(req *Request) (*Response, error) {
 			return nil
 		}),
 		chromedp.Navigate(req.URL.String()),
-		chromedp.WaitReady(":root"),
+		chromedp.WaitReady(req.RenderedWaitFor),
 		chromedp.ActionFunc(func(ctx context.Context) error {
 			node, err := dom.GetDocument().Do(ctx)
 			if err != nil {

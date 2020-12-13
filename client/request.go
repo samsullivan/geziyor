@@ -20,6 +20,10 @@ type Request struct {
 	// fully rendered HTML DOM response will returned as response
 	Rendered bool
 
+	// If a request is Rendered, this optionally waits for a
+	// specific DOM element (via selector string) to be loaded
+	RenderedWaitFor string
+
 	// Optional response body encoding. Leave empty for automatic detection.
 	// If you're having issues with auto detection, set this.
 	Encoding string
